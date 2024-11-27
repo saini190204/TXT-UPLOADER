@@ -1,4 +1,4 @@
-from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
+ùfrom pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
 import requests
 import json
 import subprocess
@@ -30,14 +30,14 @@ import datetime
 import aiohttp
 
 bot = Client("bot",
-             bot_token= "7297413639:AAFzcc2bOjfgUSUieCSrjmJlw1rzM5UPaMM", 
+             bot_token= "7225540105:AAGDRekpNYzvEVAv34UwtBxpAKU0frvnvOI", 
              #bot_token= os.environ.get("BOT_TOKEN"),
              api_id= 23031620,
              api_hash= "31cb00c1cbe580394778b43105864bca")
-auth_users = [502980590]
+auth_users = [961916589]
 #romeo  
 
-owner_id = 502980590
+owner_id = 961916589
 # Extras 
 failed_links = []  # List to store failed links
 fail_cap =f"**➜ This file Contain Failed Downloads while Downloding \n You Can Retry them one more time **"
