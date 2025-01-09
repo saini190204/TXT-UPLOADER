@@ -26,13 +26,13 @@ from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
 from pyrogram.types.messages_and_media import message
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-cookies_path = 'cookies.txt'
 
 bot = Client(
     "bot",
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=BOT_TOKEN)
+
 
 keyboard = InlineKeyboardMarkup(
     [
@@ -98,6 +98,7 @@ async def start_command(bot: Client, message: Message):
         reply_markup=keyboard
     )
 
+
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
     await m.reply_text("**Stopped**🚦", True)
@@ -105,7 +106,7 @@ async def restart_handler(_, m):
 
 
 
-@bot.on_message(filters.command(["drm"]))
+@bot.on_message(filters.command(["txt"]))
 async def upload(bot: Client, m: Message):
     editable = await m.reply_text('𝕤ᴇɴᴅ ᴛxᴛ ғɪʟᴇ ⚡️')
     input: Message = await bot.listen(editable.chat.id)
@@ -223,13 +224,11 @@ async def upload(bot: Client, m: Message):
                 ytf = f"b[height<={raw_text2}][ext=mp4]/bv[height<={raw_text2}][ext=mp4]+ba[ext=m4a]/b[ext=mp4]"
             else:
                 ytf = f"b[height<={raw_text2}]/bv[height<={raw_text2}]+ba/b/bv+ba"
-            user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-            referer = "https://www.youtube.com"
 
             if "jw-prod" in url:
-                cmd = f'yt-dlp --cookies "{cookies_path}" --user-agent "{user_agent}" --referer "{referer}" -o "{name}.mp4" "{url}"'
+                cmd = f'yt-dlp -o "{name}.mp4" "{url}"'
             else:
-                cmd = f'yt-dlp --cookies "{cookies_path}" --user-agent "{user_agent}" --referer "{referer}" -f "{ytf}" "{url}" -o "{name}.mp4"'
+                cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:  
                 
