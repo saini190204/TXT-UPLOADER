@@ -1,3 +1,7 @@
+# Don't Remove Credit Tg - @VJ_Botz
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Ask Doubt on telegram @KingVJ01
+
 import time
 import math
 import os
@@ -17,7 +21,6 @@ class Timer:
 
 from datetime import datetime,timedelta
 
-#lets do calculations
 def hrb(value, digits= 2, delim= "", postfix=""):
     """Return a human-readable file size.
     """
@@ -66,7 +69,6 @@ def hrt(seconds, precision = 0):
 
 timer = Timer()
 
-# designed by Kshitij
 async def progress_bar(current, total, reply, start):
     if timer.can_send():
         now = time.time()
@@ -86,22 +88,12 @@ async def progress_bar(current, total, reply, start):
             sp = str(hrb(speed)) + "/s"
             tot = hrb(total)
             cur = hrb(current)
-            
-            #don't even change anything till here
-            # Calculate progress bar dots
-            #ab mila dil ko sukun #by Kshitij
-            #change from here if you want 
             bar_length = 11
             completed_length = int(current * bar_length / total)
             remaining_length = bar_length - completed_length
-            #progress_bar = "▰" * completed_length + "▱" * remaining_length
-            #progress_bar = "**✦**" * completed_length + "**✧**" * remaining_length
-            progress_bar = "**►**" * completed_length + "**▷**" * remaining_length
+            progress_bar = "▰" * completed_length + "▱" * remaining_length
             
             try:
-                  
                 await reply.edit(f'**╭──⌈📤 𝙐𝙥𝙡𝙤𝙖𝙙𝙞𝙣𝙜 📤⌋──╮ \n┣⪼ [ {progress_bar} ]\n┣⪼ 🚀 𝙎𝙥𝙚𝙚𝙙 : {sp} \n┣⪼ 📈 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 : {perc} \n┣⪼ ⏳ 𝙇𝙤𝙖𝙙𝙚𝙙 : {cur}\n┣⪼ 🍁 𝙎𝙞𝙯𝙚 :  {tot} \n┣⪼ 🕛 𝙀𝙏𝘼 : {eta} \n╰────⌈ **✪ @EX_DOLPHIN **✪** ⌋────╯**\n') 
-                #await reply.edit(f'`┌ 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 📈 -【 {perc} 】\n├ 𝙎𝙥𝙚𝙚𝙙 🧲 -【 {sp} 】\n└ 𝙎𝙞𝙯𝙚 📂 -【 {cur} / {tot} 】`')
-         #       await reply.edit(f'`╭──⌈📤 𝙐𝙥𝙡𝙤𝙖𝙙𝙞𝙣𝙜 📤⌋──╮ \n├{progress_bar}\n├ 𝙎𝙥𝙚𝙚𝙙 : {sp} \n├ 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 : {perc} \n├ 𝙇𝙤𝙖𝙙𝙚𝙙 : {cur}\n├ 𝙎𝙞𝙯𝙚 :  {tot} \n├ 𝙀𝙏𝘼 : {eta} \n╰─⌈ Bot Made By Kshitij ⌋─╯`\n') 
             except FloodWait as e:
                 time.sleep(e.x)
