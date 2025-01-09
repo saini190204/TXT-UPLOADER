@@ -33,22 +33,6 @@ bot = Client("bot",
              #bot_token= os.environ.get("BOT_TOKEN"),
              api_id= 23031620,
              api_hash= "31cb00c1cbe580394778b43105864bca")
-auth_users = [2052075731]
-#romeo  
-
-owner_id = 2052075731
-# Extras 
-failed_links = []  # List to store failed links
-fail_cap =f"**➜ This file Contain Failed Downloads while Downloding \n You Can Retry them one more time **"
-
-# counter 
-global videocount, pdfcount  # Declare videocount and pdfcount as global variables
-
-#url var 
-pwdl = os.environ.get("api")
-
-processing_request = False  # Variable to track if a request is being processed
-
 
 keyboard = InlineKeyboardMarkup(
     [
@@ -97,19 +81,6 @@ Busy = InlineKeyboardMarkup(
 )
 
 
-@bot.on_message(filters.command(["logs"]) )
-async def send_logs(bot: Client, m: Message):
-    try:
-        
-        # Assuming `assist.txt` is located in the current directory
-         with open("Assist.txt", "rb") as file:
-            sent= await m.reply_text("**📤 Sending you ....**")
-            await m.reply_document(document=file)
-            await sent.delete(True)
-    except Exception as e:
-        await m.reply_text(f"Error sending logs: {e}")
-
-
 # List of image URLs
 image_urls = [
     "https://graph.org/file/9dbe3901f43b11e98e6f0.jpg",
@@ -140,244 +111,92 @@ async def start_command(bot: Client, message: Message):
         reply_markup=keyboard
     )
 
-@bot.on_message(filters.command('h2t'))
-async def run_bot(bot: Client, m: Message):
-    user_id = m.from_user.id
-    if user_id not in auth_users:
-        await m.reply_text("**HEY BUDDY THIS IS ONLY FOR MY ADMINS TO USE THIS CONATCH MY DEV : @EX_DOLPHIN  **")
-    else:
-        editable = await m.reply_text(" Send Your HTML file\n")
-        input: Message = await bot.listen(editable.chat.id)
-        html_file = await input.download()
-        await input.delete(True)
-        await editable.delete()
-        with open(html_file, 'r') as f:
-            soup = BeautifulSoup(f, 'html.parser')
-            tables = soup.find_all('table')
-            videos = []
-            for table in tables:
-                rows = table.find_all('tr')
-                for row in rows:
-                    cols = row.find_all('td')
-                    name = cols[0].get_text().strip()
-                    link = cols[1].find('a')['href']
-                    videos.append(f'{name}:{link}')
-        txt_file = os.path.splitext(html_file)[0] + '.txt'
-        with open(txt_file, 'w') as f:
-            f.write('\n'.join(videos))
-        await m.reply_document(document=txt_file,caption="Here is your txt file.")
-        os.remove(txt_file)
-
-
-
-def is_subscription_expired(user_id):
-    with open("Subscription_data.txt", "r") as file:
-        for line in file:
-            data = line.strip().split(", ")
-            if int(data[0]) == user_id:
-                end_date = datetime.datetime.strptime(data[2], "%d-%m-%Y") #%Y-%m-%d
-                today = datetime.datetime.today()
-                return end_date < today
-    return True  # User not found in Subscription_data.txt or no subscription data found
-
-
-
-# Define the myplan command handler
-@bot.on_message(filters.command("myplan"))
-async def myplan_command_handler(bot, message):
-    user_id = message.from_user.id
-    with open("Subscription_data.txt", "r") as file:
-        for line in file:
-            data = line.strip().split(", ")
-            if int(data[0]) == user_id:
-                subscription_start = data[1]
-                expiration_date = data[2]
-                today = datetime.datetime.today()
-                if today > datetime.datetime.strptime(expiration_date, "%d-%m-%Y"):
-                    plan = "EXPIRED "
-                    response_text = f"**✨ User ID: {user_id}\n📊 PLAN STAT : {plan}\n\n🔰 Activated on : {subscription_start}\n🧨 Expiration Date: {expiration_date} \n\n 🫰🏼 ACTIVATE YOUR PLAN NOW ! \n⚡️ TO ACTIVATE MESSAGE : @ITS_NOT_ROMEO :D **"
-                else:
-                    plan = "ALIVE!"  
-                    response_text = f"**✨ User ID: {user_id}\n📊 PLAN STAT : {plan}\n🔰 Activated on : {subscription_start}\n🧨 Expiration Date: {expiration_date}**"
-                await message.reply(response_text)
-                return
-    if user_id in auth_users:
-        await message.reply("YOU HAVE LIFE TIME ACCESS :) ")
-    else:
-        await message.reply("No subscription data found for you.")
-
-
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
+    await m.reply_text("**Stopped**🚦", True)
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+
+@bot.on_message(filters.command(["txt"]))
+async def upload(bot: Client, m: Message):
+    editable = await m.reply_text('𝕤ᴇɴᴅ ᴛxᴛ ғɪʟᴇ ⚡️')
+    input: Message = await bot.listen(editable.chat.id)
+    x = await input.download()
+    await input.delete(True)
+
+    path = f"./downloads/{m.chat.id}"
+
+    try:
+       with open(x, "r") as f:
+           content = f.read()
+       content = content.split("\n")
+       links = []
+       for i in content:
+           links.append(i.split("://", 1))
+       os.remove(x)
+            # print(len(links)
+    except:
+           await m.reply_text("**Invalid file input.**")
+           os.remove(x)
+           return
     
-        if failed_links:
-         error_file_send = await m.reply_text("**📤 Sending you Failed Downloads List Before Stoping   **")
-         with open("failed_downloads.txt", "w") as f:
-          for link in failed_links:
-            f.write(link + "\n")
-    # After writing to the file, send it
-         await m.reply_document(document="failed_downloads.txt", caption=fail_cap)
-         await error_file_send.delete()
-         os.remove(f'failed_downloads.txt')
-         failed_links.clear()
-         processing_request = False  # Reset the processing flag
-         #await m.reply_text("**Note This Is BETA Stage May have Bugs  **")
-         await m.reply_text("🚦**STOPPED**🚦", True)
-         os.execl(sys.executable, sys.executable, *sys.argv)
-        else:
-         processing_request = False  # Reset the processing flag
-         #await m.reply_text("**Note This Is BETA Stage May have Bugs  **")
-         await m.reply_text("🚦**STOPPED**🚦", True)
-         os.execl(sys.executable, sys.executable, *sys.argv)
    
-
-@bot.on_message(filters.command("restart"))
-async def restart_handler(_, m):
-   
-     processing_request = False  # Reset the processing flag
-     await m.reply_text("🤖**Restarting Bot **🤖", True)
-     os.execl(sys.executable, sys.executable, *sys.argv)
-    
-
-@bot.on_message(filters.command(["drm"]))
-async def account_login(bot: Client, m: Message):
-    global processing_request
-    if m.from_user.id not in auth_users:
-            await m.reply_text("** YOU ARE NOT IN ADMIN LIST **",reply_markup=keyboard)
-            return
-
-    if processing_request:
-            await m.reply_text("**🫨 I'm currently processing another request.\n Please try again later.**",reply_markup=Busy)
-            return
-    else:
-        
-        editable = await m.reply_text(f"**➠ 𝐒𝐞𝐧𝐝 𝐌𝐞 𝐘𝐨𝐮𝐫 𝐓𝐗𝐓 𝐅𝐢𝐥𝐞 𝐢𝐧 𝐀 𝐏𝐫𝐨𝐩𝐞𝐫 𝐖𝐚𝐲 \n\n➠ TXT FORMAT : LINK : URL \n➠ 𝐌𝐨𝐝𝐢𝐟𝐢𝐞𝐝 𝐁𝐲:  @EX_DOLPHIN **")
-        input: Message = await bot.listen(editable.chat.id)
-        editable = await editable.edit(f"**⚙️PROCESSING INPUT.......**")
-
-        if input.document:
-            processing_request = True
-            x = await input.download()        
-            await input.delete(True)
-            file_name, ext = os.path.splitext(os.path.basename(x))
-            credit = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
-            path = f"./downloads/{m.chat.id}"
-
-            try:
-                links = []
-                videocount = 0
-                pdfcount = 0
-                with open(x, "r", encoding="utf-8") as f:
-                    for line in f:
-                        link = line.strip().split("://", 1)
-                        links.append(link)
-                        if ".pdf" in link[1]:
-                            pdfcount += 1 
-                        else:
-                            videocount += 1
-            except Exception as e:
-                await m.reply_text("Error occurred while processing the file.🥲")
-                print("Error:", e)
-                os.remove(x)
-                processing_request = False  # Reset the processing flag
-                return
-
-        else:
-            content = input.text
-            content = content.split("\n")
-            links = []
-            videocount = 0
-            pdfcount = 0
-
-            for i in content:
-                link = i.split("://", 1)
-                links.append(link)
-                if ".pdf" in link[1]:
-                    pdfcount += 1 
-                else:
-                    videocount += 1
-    await editable.edit(f"**Total links found are : {len(links)}\n┃\n┠ Total Video Count : {videocount}\n┠ Total Pdf Count: {pdfcount}  \n┠ Send From where you want to download initial is  : `1` \n┃\n┠ Send `stop` If don't want to Contine \n┖ Bot By : @ITS_NOT_ROMEO**" )
+    await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
     await input0.delete(True)
-    if raw_text.lower() == "stop":
-        await editable.edit(f"**Task Stoped ! **")
-        await input0.delete(True)
-        processing_request = False  # Reset the processing flag
-        os.remove(x)
-        return
-    
 
-    await editable.edit(f"**ENTER TILL WHERE YOU WANT TO DOWNLOAD \n┃\n┠ Starting Dowload Form : `{raw_text}`\n┖ Last Index Of Links is : `{len(links)}` **")
-    input9: Message = await bot.listen(editable.chat.id)
-    raw_text9 = input9.text
-    
-    if int(input9.text) > len(links) :
-        await editable.edit(f"**PLZ ENTER NUMBER IN RANGE OF INDEX COUNT    **")
-        processing_request = False  # Reset the processing flag
-        await m.reply_text("**Exiting Task......  **")
-        return
-    else: await input9.delete(True)
-    
-
-
-    await editable.edit("**Enter Batch Name or send d for grabbing from text filename.**")
+    await editable.edit("**Now Please Send Me Your Batch Name**")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
     await input1.delete(True)
-    if raw_text0 == 'd':
-        b_name = file_name
-    else:
-        b_name = raw_text0
+    
 
-
-    # await editable.edit("**Enter resolution \n SEND 1 for 720p \n 2 for 480 \n 3 for 360 \n 4 for 240**")
-    await editable.edit("**Enter resolution \n SEND 1 for 720p \n 2 for 480 \n 3 for 360 \n 4 for 240**")
+    await editable.edit("**𝔼ɴᴛᴇʀ ʀᴇ𝕤ᴏʟᴜᴛɪᴏɴ📸**\n144,240,360,480,720,1080 please choose quality")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
-    quality = input2.text
     await input2.delete(True)
+    try:
+        if raw_text2 == "144":
+            res = "256x144"
+        elif raw_text2 == "240":
+            res = "426x240"
+        elif raw_text2 == "360":
+            res = "640x360"
+        elif raw_text2 == "480":
+            res = "854x480"
+        elif raw_text2 == "720":
+            res = "1280x720"
+        elif raw_text2 == "1080":
+            res = "1920x1080" 
+        else: 
+            res = "UN"
+    except Exception:
+            res = "UN"
     
     
-    await editable.edit("**Enter Your Name or send `de` for use default**")
+
+    await editable.edit("Now Enter A Caption to add caption on your uploaded file")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
-    if raw_text3 == 'de':
-        CR = "@ITS_NOT_ROMEO"
+    highlighter  = f"️ ⁪⁬⁮⁮⁮"
+    if raw_text3 == 'Robin':
+        MR = highlighter 
     else:
-        CR = raw_text3
-
-
-    await editable.edit("**🖼 Thumbnail \n\n• Custom Thumbnail : Use @vtelegraphbot and send me link \n• If you don't want Send :  `no` **")  
+        MR = raw_text3
+   
+    await editable.edit("Now send the Thumb url/nEg » https://graph.org/file/ce1723991756e48c35aa1.jpg \n Or if don't want thumbnail send = no")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
-    #await editable.delete()
+    await editable.delete()
+
     thumb = input6.text
-    thumb2 = input6.text
-
-    await editable.edit("**⚡️ Thumnail in PDF too ? \n\n• If need Same thumb on pdf as video send : `yes` \nNOTE : if you have given stumb for Video then only use this   \n• SEND `no` If you dont want to add \n\n• Want other thumbnail ? \n\n• Send `custom`  IF need Different thubnail for pdf **")  
-    input7 = message = await bot.listen(editable.chat.id)
-    raw_text7 = input7.text.lower()  # Convert to lowercase
-    await input7.delete(True)
-    
-
-    if raw_text7 == "custom":
-     await editable.edit("**Send URl of Pdf Thumbanil **")  
-     input8 = message = await bot.listen(editable.chat.id)
-     raw_text8 = input8.text.lower()  # Convert to lowercase
-     await input8.delete(True)
-     await editable.delete()
-     thumb3 = input8.text 
-
-    else: await editable.delete() 
-      
-    
     if thumb.startswith("http://") or thumb.startswith("https://"):
-        # getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
-        getstatusoutput(f"wget {thumb} -O thumb1.jpg")
-        thumb = "thumb1.jpg"
+        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
+        thumb = "thumb.jpg"
     else:
         thumb == "no"
 
@@ -385,7 +204,7 @@ async def account_login(bot: Client, m: Message):
         count = 1
     else:
         count = int(raw_text)
-  
+
     try:
         for i in range(count - 1, len(links)):
 
@@ -441,7 +260,7 @@ async def account_login(bot: Client, m: Message):
                       		copy = helper.decrypt_file(file_path, key)
                       		filename = file_path
                       		await prog.delete(True)
-                      		await bot.send_document(chat_id=m.chat.id, document=filename, caption=cc1)
+                          await bot.send_document(chat_id=m.chat.id, document=filename, caption=cc1)
                       		count += 1
                       	else:
                       		Show = f"⥥ 🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶⬇️⬇️... »\n\n📝Name » {name}\n❄Quality » {raw_text2}\n\n🔗URL » {url}"
@@ -502,4 +321,3 @@ async def account_login(bot: Client, m: Message):
 
 
 bot.run()
-                                
