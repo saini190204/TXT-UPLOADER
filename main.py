@@ -84,7 +84,7 @@ Busy = InlineKeyboardMarkup(
 @bot.on_message(filters.command(["start"]))
 async def start_command(bot: Client, message: Message):
     # Choose a random image URL from the list
-    random_image_url = ("https://graph.org/file/9dbe3901f43b11e98e6f0.jpg", "https://graph.org/file/c5ec0a02be408b354d3fc.jpg", "https://graph.org/file/c186818a566c501f14abf.jpg", "https://graph.org/file/850ef256ede1370257b5d.jpg", "https://graph.org/file/40700542e58889b5c42fe.jpg", "https://graph.org/file/94a7875bb51006e7bd528.jpg")
+    random_image_url = ("https://graph.org/file/9dbe3901f43b11e98e6f0.jpg")
     
     
     # Caption for the image
