@@ -237,15 +237,16 @@ async def upload(bot: Client, m: Message):
 
             try:  
                 
-                cc = f'**[▶️] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}\n\n**Batch Name :** {raw_text0}\n\n**Extracted By ➤ {MR}**'
-                cc1 = f'**[📑] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}\n\n**Batch Name :** {raw_text0}\n\n**Extracted By ➤ {MR}**'                
+                cc = f'**[ 🎥 ] 𝗟ᴇᴄ ɪᴅ. » {str(count).zfill(3)}\n**<pre>🌟 𝗔ᴘᴘ 𝗡ᴀᴍᴇ** » {MR}<pre>**\n**\n**🔰 𝗧ɪᴛᴛʟᴇ** » {name1}**({res})**.mp4\n**<pre><code>📲 𝗕ᴀᴛᴄʜ 𝗡ᴀᴍᴇ** »**\n\n**{raw_text0} </code></pre>**\n\n**📛 𝗗ᴏᴡɴʟᴏᴀᴅᴇᴅ 𝗕ʏ » 🇮🇳 𝗝ᴀɪ 𝗦ʜʀᴇᴇ 𝗥ᴀᴍ 🇮🇳**\n\n'    
+                ccyt = f'**[ 🎥 ] 𝗟ᴇᴄ ɪᴅ. » {str(count).zfill(3)}\n**<pre>🌟 𝗔ᴘᴘ 𝗡ᴀᴍᴇ** » {MR}<pre>**\n**\n**🔰 𝗧ɪᴛᴛʟᴇ** » {name1}**({res})**.mp4\n\n**🕹️ 𝗬ᴏᴜ𝗧ᴜʙᴇ 𝗟ɪɴᴋ »**\n**{url}\n**<code><pre>📲 𝗕ᴀᴛᴄʜ 𝗡ᴀᴍᴇ** »**\n\n**{raw_text0} </code></pre>**\n\n**📛 𝗗ᴏᴡɴʟᴏᴀᴅᴇᴅ 𝗕ʏ » 🇮🇳 𝗝ᴀɪ 𝗦ʜʀᴇᴇ 𝗥ᴀᴍ 🇮🇳**\n\n'
+                cc1 = f'**[ 📁 ] 𝗣ᴅғ ɪᴅ. » {str(count).zfill(3)}\n**<pre>🌟 𝗔ᴘᴘ 𝗡ᴀᴍᴇ** » {MR}<pre>**\n**\n**🔰 𝗧ɪᴛᴛʟᴇ** » {name1} **({res})**.pdf \n**<pre><code>📲 𝗕ᴀᴛᴄʜ 𝗡ᴀᴍᴇ** »**\n\n**{raw_text0} </code></pre>**\n\n**📛 𝗗ᴏᴡɴʟᴏᴀᴅᴇᴅ 𝗕ʏ » 🇮🇳 𝗝ᴀɪ 𝗦ʜʀᴇᴇ 𝗥ᴀᴍ 🇮🇳**\n'                
                 if "*" in url:
                      a, k = url.split("*", 1)
                      url = a
                      key = k
                      try:
                       	if ".pdf" in a:
-                      		Show = f"⥥ 🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶⬇️⬇️... »\n\n📝Name » {name}\n❄Quality » {raw_text2}\n\n🔗URL » {url}"
+                      		Show = f"**⚡Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**\n\n**📚❰Name❱** `{name}\n🔗𝗧ᴏᴛᴀʟ 𝗟ɪɴᴋ𝘀 » {len(links)}\n📊𝗖ᴜʀʀᴇɴᴛʟʏ 𝗢ɴ » {str(count).zfill(3)}\n🐲𝗤ᴜᴀʟɪᴛʏ » {raw_text2}`\n🌿**Url**» {url}\n\nᴘᴀᴅʜᴀɪ ᴋᴀʀ ʟᴇ ʙʀᴏ🧐\n\n **ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ [『 𝐁𝐢𝐬𝐡𝐧𝐨𝐢 ™』❤️]**\n**🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏 **"
                       		prog = await m.reply_text(Show)
                       		file_path = await helper.download_file(url, name)
                       		copy = helper.decrypt_file(file_path, key)
@@ -254,7 +255,7 @@ async def upload(bot: Client, m: Message):
                       		await bot.send_document(chat_id=m.chat.id, document=filename, caption=cc1)
                       		count += 1
                       	else:
-                      		Show = f"⥥ 🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶⬇️⬇️... »\n\n📝Name » {name}\n❄Quality » {raw_text2}\n\n🔗URL » {url}"
+                      		Show = f"**⚡Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**\n\n**📚❰Name❱** `{name}\n🔗𝗧ᴏᴛᴀʟ 𝗟ɪɴᴋ𝘀 » {len(links)}\n📊𝗖ᴜʀʀᴇɴᴛʟʏ 𝗢ɴ » {str(count).zfill(3)}\n🐲𝗤ᴜᴀʟɪᴛʏ » {raw_text2}`\n🌿**Url**» {url}\n\nᴘᴀᴅʜᴀɪ ᴋᴀʀ ʟᴇ ʙʀᴏ🧐\n\n **ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ [『 𝐁𝐢𝐬𝐡𝐧𝐨𝐢 ™』❤️]**\n**🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏 **"
                       		prog = await m.reply_text(Show)
                       		file_path = await helper.download_file(url, name)
                       		copy = helper.decrypt_file(file_path, key)
@@ -291,7 +292,7 @@ async def upload(bot: Client, m: Message):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**⥥ 🄳🄾🅆🄽🄻🄾🄰🄳🄸🄽🄶⬇️⬇️... »**\n\n**📝Name »** `{name}\n❄Quality » {raw_text2}`\n\n**🔗URL »** `{url}`"
+                    Show = f"**⚡Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**\n\n**📚❰Name❱** `{name}\n🔗𝗧ᴏᴛᴀʟ 𝗟ɪɴᴋ𝘀 » {len(links)}\n📊𝗖ᴜʀʀᴇɴᴛʟʏ 𝗢ɴ » {str(count).zfill(3)}\n🐲𝗤ᴜᴀʟɪᴛʏ » {raw_text2}`\n🌿**Url**» {url}\n\nᴘᴀᴅʜᴀɪ ᴋᴀʀ ʟᴇ ʙʀᴏ🧐\n\n **ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ [『 𝐁𝐢𝐬𝐡𝐧𝐨𝐢 ™』❤️]**\n**🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏 **"
                     prog = await m.reply_text(Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
@@ -302,13 +303,14 @@ async def upload(bot: Client, m: Message):
 
             except Exception as e:
                 await m.reply_text(
-                    f"**downloading Interupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`"
+                    f"**downloading failed [『 𝐁𝐢𝐬𝐡𝐧𝐨𝐢 ™』❤️]**\n{str(e)}\n**Name** - {name}\n**Link** - `{url}`\n\n🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏"
                 )
                 continue
 
     except Exception as e:
         await m.reply_text(e)
-    await m.reply_text("**𝔻ᴏɴᴇ 𝔹ᴏ𝕤𝕤😎**")
+    await m.reply_text("** ʟɪsᴛ ɪɴᴅᴇx ᴏᴜᴛ ᴏғ ʀᴀɴɢᴇ **")
+    await m.reply_text("** 🔰 Sᴜᴄᴄᴇsғᴜʟʟʏ Dᴏᴡɴʟᴏᴀᴅᴇᴅ Aʟʟ Lᴇᴄᴛᴜʀᴇs...! 🔰 **")
 
 
 bot.run()
