@@ -1,38 +1,38 @@
-from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
-import requests
+# Don't Remove Credit Tg - @VJ_Botz
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Ask Doubt on telegram @KingVJ01
+
+import os
+import re
+import sys
 import json
-import subprocess
-from pyrogram import Client, filters
-from pyrogram.types.messages_and_media import message
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.errors import FloodWait
-from pyromod import listen
-from pyrogram.types import Message
-from pyrogram import Client, filters
-from p_bar import progress_bar
-from subprocess import getstatusoutput
-from aiohttp import ClientSession
-import helper
-from helper import get_drm_keys
-from logger import logging
 import time
 import asyncio
-from pyrogram.types import User, Message
-import sys
-import os
-import random
-import re
-import tempfile
-from urllib.parse import urlparse, parse_qs
-from bs4 import BeautifulSoup
-import datetime
-import aiohttp
+import requests
+import subprocess
 
-bot = Client("bot",
-             bot_token= "7836714507:AAE0uMDhthtcFEPoO96xxUxXmeyW6Obz5tU", 
-             #bot_token= os.environ.get("BOT_TOKEN"),
-             api_id= 23031620,
-             api_hash= "31cb00c1cbe580394778b43105864bca")
+import core as helper
+from utils import progress_bar
+from vars import API_ID, API_HASH, BOT_TOKEN
+from aiohttp import ClientSession
+from pyromod import listen
+from subprocess import getstatusoutput
+
+from pyrogram import Client, filters
+import mmap
+from pyrogram.types import Message
+from pyrogram.errors import FloodWait
+from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
+from pyrogram.types.messages_and_media import message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+cookies_path = 'cookies.txt'
+
+bot = Client(
+    "bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN)
 
 keyboard = InlineKeyboardMarkup(
     [
