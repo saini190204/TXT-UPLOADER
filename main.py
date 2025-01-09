@@ -101,7 +101,7 @@ async def start_command(bot: Client, message: Message):
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
-    await m.reply_text("**Stopped**🚦", True)
+    await m.reply_text("**🚯 ꜱᴛᴏᴘᴘᴇᴅ 🚯**", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
@@ -135,62 +135,67 @@ async def upload(bot: Client, m: Message):
     raw_text = input0.text
     await input0.delete(True)
 
-    await editable.edit("**Now Please Send Me Your Batch Name**")
-    input1: Message = await bot.listen(editable.chat.id)
-    raw_text0 = input1.text
-    await input1.delete(True)
+    await editable.edit("**🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏\nᴇɴᴛᴇʀ ʙᴀᴛᴄʜ ɴᴀᴍᴇ ᴏʀ ꜱᴇɴᴅ `/d` ꜰᴏʀ ɢʀᴀʙɪɴɢ ꜰʀᴏᴍ ᴛᴇxᴛ ꜰɪʟᴇɴᴀᴍᴇ.\n🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏**")    
+    input1: Message = await bot.listen(editable.chat.id)    
+    raw_text0 = input1.text    
+    await input1.delete(True)    
+    if raw_text0 == '/d':    
+        b_name = file_name    
+    else:    
+        b_name = raw_text0
     
 
     await editable.edit("**𝔼ɴᴛᴇʀ ʀᴇ𝕤ᴏʟᴜᴛɪᴏɴ📸**\n144,240,360,480,720,1080 please choose quality")
-    input2: Message = await bot.listen(editable.chat.id)
-    raw_text2 = input2.text
-    await input2.delete(True)
-    try:
-        if raw_text2 == "144":
-            res = "256x144"
-        elif raw_text2 == "240":
-            res = "426x240"
-        elif raw_text2 == "360":
-            res = "640x360"
-        elif raw_text2 == "480":
-            res = "854x480"
-        elif raw_text2 == "720":
-            res = "1280x720"
-        elif raw_text2 == "1080":
-            res = "1920x1080" 
-        else: 
-            res = "UN"
-    except Exception:
+    await editable.edit("**╭━━━━❰ᴇɴᴛᴇʀ ʀᴇꜱᴏʟᴜᴛɪᴏɴ❱━➣\n┣⪼ 144\n┣⪼ 240\n┣⪼ 360\n┣⪼ 480\n┣⪼ 720\n┣⪼ 1080\n╰━━⌈⚡[『 𝐁𝐢𝐬𝐡𝐧𝐨𝐢 ™』❤️]⚡⌋━━➣ **")   
+    input2: Message = await bot.listen(editable.chat.id)    
+    raw_text2 = input2.text    
+    await input2.delete(True)    
+    try:    
+        if raw_text2 == "144":    
+            res = "144x256"    
+        elif raw_text2 == "240":    
+            res = "240x426"    
+        elif raw_text2 == "360":    
+            res = "360x640"    
+        elif raw_text2 == "480":    
+            res = "480x854"    
+        elif raw_text2 == "720":    
+            res = "720x1280"    
+        elif raw_text2 == "1080":    
+            res = "1080x1920"     
+        else:     
+            res = "UN"    
+    except Exception:    
             res = "UN"
     
     
 
-    await editable.edit("Now Enter A Caption to add caption on your uploaded file")
-    input3: Message = await bot.listen(editable.chat.id)
-    raw_text3 = input3.text
-    await input3.delete(True)
-    highlighter  = f"️ ⁪⁬⁮⁮⁮"
-    if raw_text3 == 'Robin':
-        MR = highlighter 
-    else:
+    await editable.edit("**🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏\nᴇɴᴛᴇʀ ʏᴏᴜʀ ᴄᴏᴀᴄʜɪɴɢ ᴀᴘᴘ ɴᴀᴍᴇ ᴏʀ ꜱᴇɴᴅ `de` ꜰᴏʀ ᴜꜱᴇ ᴅᴇꜰᴀᴜʟᴛ\n🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏**")    
+    input3: Message = await bot.listen(editable.chat.id)    
+    raw_text3 = input3.text    
+    await input3.delete(True)    
+    if raw_text3 == 'de':    
+        MR = credit    
+    else:    
         MR = raw_text3
    
-    await editable.edit("Now send the Thumb url/nEg » https://graph.org/file/ce1723991756e48c35aa1.jpg \n Or if don't want thumbnail send = no")
-    input6 = message = await bot.listen(editable.chat.id)
+    await editable.edit("🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏\nɴᴏᴡ ꜱᴇɴᴅ ᴛʜᴇ **ᴛʜᴜᴍʙ ᴜʀʟ**\nᴇɢ : `ʜᴛᴛᴘꜱ://ɢʀᴀᴘʜ.ᴏʀɢ/ꜰɪʟᴇ/45ꜰ562ᴅᴄ05ʙ2874ᴄ7277ᴇ.ᴊᴘɢ`ᴏʀ ꜱᴇɴᴅ [`no`]\n🙏𝗝⃠ᴀɪ 𝗦⃠ʜʀᴇᴇ 𝗥⃠ᴀᴍ🙏")    
+    input6 = message = await bot.listen(editable.chat.id)    
     raw_text6 = input6.text
-    await input6.delete(True)
+    thumb = input6.text    
+    if thumb.startswith("http://") or thumb.startswith("https://"):    
+        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")    
+        thumb = "thumb.jpg"    
+    else:    
+        thumb == "no"    
+    await input6.delete(True)    
     await editable.delete()
 
-    thumb = input6.text
-    if thumb.startswith("http://") or thumb.startswith("https://"):
-        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
-        thumb = "thumb.jpg"
-    else:
-        thumb == "no"
 
-    if len(links) == 1:
-        count = 1
-    else:
+
+    if len(links) == 1:    
+        count = 1    
+    else:    
         count = int(raw_text)
 
     try:
